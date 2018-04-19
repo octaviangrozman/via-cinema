@@ -12,6 +12,7 @@ namespace via_cinema.Controllers
     {
         public IActionResult Index()
         {
+            //as asdasd
             return View();
         }
 
