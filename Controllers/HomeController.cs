@@ -5,15 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using via_cinema.Models;
+using viacinema.Data;
 
 namespace via_cinema.Controllers
 {
     public class HomeController : Controller
     {
+        public DataContext context;
+
+        public HomeController(DataContext _context)
+        {
+            context = _context;
+        }
+
         public IActionResult Index()
         {
-            //as asdasd
-            return View();
+            var movies = context.Movies
+                .OrderByDescending(c => c.ReleaseDate)
+                .ToList();
+
+            return View(movies);
         }
 
         public IActionResult About()
