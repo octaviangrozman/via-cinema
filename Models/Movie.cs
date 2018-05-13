@@ -22,7 +22,7 @@ namespace viacinema.Models
         [Range(0, 5)]
         public byte Rating { get; set; } 
 
-        [MaxLength(1500),]
+        [MaxLength(1500)]
         public string Description { get; set; }
     }
 }
