@@ -10,6 +10,8 @@ namespace viacinema.Data
     public class DataContext : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Seat> Seats { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) {
 
