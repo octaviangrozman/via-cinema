@@ -1,22 +1,28 @@
-﻿@model List<viacinema.Models.Movie>
+﻿@model viacinema.ViewModels.HomeViewModel
+
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @using viacinema.Models
 
 <div class="home">
     <h1>Movies</h1>
     <ul>
         @{
-            foreach (Movie movie in @Model)
+            foreach (Movie movie in @Model.Movies)
             {
                 <li class="movie-container">
                     <h3 class="movie-title">@movie.Title</h3>
-                    <img class="movie-image" src="@movie.ImageUrl" />
-                    <p class="movie-release-date"><b>Release Date:</b> @movie.ReleaseDate.ToShortDateString()</p>
-                    <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
-                    <p class="movie-rating"><b>Rating:</b> @movie.Rating</p>
-                    <p class="movie-description"><b>Description:</b> @movie.Description</p>
+                    <div class="movie-content">
+                        <img class="movie-image" src="@movie.ImageUrl" />
+                        <div class="movie-info">
+                            <p class="movie-description"><b>Description:</b> @movie.Description</p>
+                            <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
+                            <p class="movie-rating"><b>Rating:</b> @movie.Rating</p>
+                            <a class="more-info-button" href="/movies/@movie.Id">More info</a>
+                        </div>
+                    </div>
                 </li>
 
             }
@@ -25,13 +31,49 @@
 </div>
 
 <style>
-    .home {
-        .movie-container {
-            .movie-image {
-                width: 150px;
-                height: 150px;
-            }
-
-        }
+    ul {
+        margin: unset;
+        padding: unset;
     }
+
+    li {
+        margin: unset;
+        list-style-type: none;
+    }
+
+    .movie-image {
+        width: 350px;
+        height: 250px;
+        margin: 0px 20px 20px 0;
+    }
+
+    .movie-content {
+        display: flex;
+    }
+
+    .movie-content .movie-image {
+        flex: 2;
+    }
+
+    .movie-content .movie-info {
+        flex: 4;
+    }
+
+    .more-info-button {
+        -webkit-appearance: unset;
+        outline: unset;
+        color: #fff;
+        background: #66b0f5;
+        border: unset;
+        padding: 10px 60px;
+        margin-top: 20px;
+        font-size: 17px;
+        border-radius: 3px;
+    }
+
+        .more-info-button:hover {
+            opacity: .7;
+            color: #fff;
+            text-decoration: unset;
+        }
 </style>

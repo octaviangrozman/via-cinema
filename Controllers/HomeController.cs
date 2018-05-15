@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using via_cinema.Models;
 using viacinema.Data;
+using viacinema.ViewModels;
 
 namespace via_cinema.Controllers
 {
@@ -22,9 +23,10 @@ namespace via_cinema.Controllers
         {
             var movies = context.Movies
                 .OrderByDescending(c => c.ReleaseDate)
+                .OrderByDescending(c => c.Rating)
                 .ToList();
 
-            return View(movies);
+            return View(new HomeViewModel(movies));
         }
 
         public IActionResult About()
