@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180513151411_addedSeatTable")]
+    partial class addedSeatTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,26 +44,6 @@ namespace viacinema.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("viacinema.Models.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("availableSeats");
-
-                    b.Property<int>("roomNo");
-
-                    b.Property<string>("screenType")
-                        .IsRequired()
-                        .HasMaxLength(5);
-
-                    b.Property<int>("totalSeats");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("viacinema.Models.Seat", b =>
