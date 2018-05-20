@@ -13,6 +13,7 @@ namespace viacinema.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Screening> Screenings { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) {
 

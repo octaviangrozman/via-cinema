@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180520130808_AddedPaymentTable")]
+    partial class AddedPaymentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +63,7 @@ namespace viacinema.Migrations
 
                     b.Property<byte>("ExpiryMonth");
 
-                    b.Property<int>("ExpiryYear");
+                    b.Property<byte>("ExpiryYear");
 
                     b.Property<string>("NameOnCard")
                         .IsRequired();

@@ -20,7 +20,7 @@ namespace viacinema.Models
         public int RoomNo { get; set; }
 
         [Required, Range(80, 120)]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public Boolean Occupied { get; set; }
