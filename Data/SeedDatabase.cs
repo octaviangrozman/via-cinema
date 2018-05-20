@@ -15,23 +15,26 @@ namespace viacinema.Data
             if (!context.Movies.Any())
             {
                 AddMovies(context);
+                context.SaveChanges();
             }
 
             if (!context.Rooms.Any())
             {
                 AddRooms(context);
+                context.SaveChanges();
             }
 
             if (!context.Seats.Any())
             {
                 AddSeats(context);
+                context.SaveChanges();
             }
 
             if (!context.Screenings.Any())
             {
                 List<Movie> movies = context.Movies.Take(2).ToList();
-                AddScreening(context, movies[0].Id, 1, DateTime.Now);
-                AddScreening(context, movies[1].Id, 2, new DateTime(2018, 5, 22, 15, 0, 0));
+                AddScreening(context, movies[0].Id, 1, DateTime.Now, "3D");
+                AddScreening(context, movies[1].Id, 2, new DateTime(2018, 5, 22, 15, 0, 0), "2D");
             }
 
             context.SaveChanges();
@@ -52,8 +55,8 @@ namespace viacinema.Data
         {
             var rooms = new Room[]
             {
-                new Room { roomNo = 1, screenType = "3D", totalSeats = 40 },
-                new Room { roomNo = 2, screenType = "2D", totalSeats = 50 }
+                new Room { availableSeats = 40, roomNo = 1, totalSeats = 40 },
+                new Room { availableSeats = 50, roomNo = 2, totalSeats = 50 }
             };
 
             context.Rooms.AddRange(rooms);
@@ -71,7 +74,7 @@ namespace viacinema.Data
 
             for (int i = 0; i < totalSeats; i ++)
             {
-                seats.Add(new Seat() { Price = 100, RoomNo = 1, SeatNo = i, RowNo = GetRowNo(i)});
+                seats.Add(new Seat() { Price = 100, RoomNo = 1, SeatNo = i+1, RowNo = GetRowNo(i)});
             }
 
             totalSeats = 50;
@@ -83,9 +86,9 @@ namespace viacinema.Data
             context.Seats.AddRange(seats);
         }
 
-        private static void AddScreening(DataContext context, int movieId, int roomNo, DateTime startTime)
+        private static void AddScreening(DataContext context, int movieId, int roomNo, DateTime startTime, String screenType)
         {
-            var screening = new Screening() { MovieId = movieId, RoomNo = roomNo, StartTime = startTime };
+            var screening = new Screening() { MovieId = movieId, RoomNo = roomNo, StartTime = startTime, ScreenType = screenType };
             context.Screenings.Add(screening);
         }
     }

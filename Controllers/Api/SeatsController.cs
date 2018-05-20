@@ -28,6 +28,17 @@ namespace viacinema.Controllers.Api
             return Ok(seats);
         }
 
+        [HttpGet("seatsroom/{roomNo}")]
+        public IActionResult GetSeatsForRoom(int roomNo)
+        {
+            var seats = context.Seats
+                .Where(s => s.RoomNo == roomNo)
+                .OrderBy(s => s.SeatNo)
+                .ToList();
+
+            return Ok(seats);
+        }
+
         [HttpGet("{id}", Name = "GetSeat")]
         public IActionResult GetSeat(int id)
         {
