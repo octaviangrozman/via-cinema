@@ -1,0 +1,38 @@
+﻿@model viacinema.ViewModels.MoreInfoViewModel
+
+@{
+    ViewData["Title"] = "Movie Specifics";
+}
+
+@using viacinema.Models
+
+<h2>Specifics</h2>
+@{Movie movie = @Model.Movie;
+        <h3 class="movie-title">@movie.Title</h3>
+        <div class="movie-content">
+            <img class="movie-image" src="@movie.ImageUrl" />
+            <div class="movie-info">
+                <p class="movie-description"><b>Description:</b> @movie.Description</p>
+                <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
+                <p class="movie-rating"><b>Rating:</b> @movie.Rating</p>
+            </div>
+        </div>
+        <div class="screenings">
+            <ul>
+                @{ foreach (Screening screening in @Model.Screenings)
+                    {
+                        <li class="screening-container">
+                            <div class="screening-content">
+                                <p class="screening-time">
+                                    <b>Date and Time: </b>@screening.StartTime
+                                    &nbsp;&nbsp;//add duration here
+                                    <b>&nbsp;&nbsp;Room #:</b> @screening.RoomNo
+                                    <a class="book-button">Book</a>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+  
+}
