@@ -13,6 +13,9 @@ namespace viacinema.Models
         [Required, MinLength(1), MaxLength(100)]
         public string Title { get; set; }
 
+        [Required, Range(1800, 18000)]
+        public int DurationInSeconds { get; set; }
+
         [Display(Name = "Release Date"), DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 

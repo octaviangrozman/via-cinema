@@ -8,7 +8,7 @@ using viacinema.ViewModels;
 
 namespace viacinema.Controllers
 {
-    [Route("MoreInfo")]
+    [Route("moreinfo")]
     public class MoreInfoController : Controller
     {
         public DataContext context;
@@ -19,13 +19,12 @@ namespace viacinema.Controllers
         }
 
         [Route("{id}")]
-        public IActionResult MoreInfo(int id)
+        public IActionResult Index(int id)
         {
-            int id_ = int.Parse(this.RouteData.Values["id"].ToString());
             var movie = context.Movies
                 .Single(m => m.Id == id);
             var screenings = context.Screenings
-                .Where(s => s.MovieId == movie.Id)
+                .Where(s => s.MovieId == id)
                 .OrderByDescending(s => s.StartTime)
                 .ToList();
 
