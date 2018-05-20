@@ -19,5 +19,8 @@ namespace viacinema.Models
         [Required, DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
 
+        [Required, MaxLength(5)]
+        public string screenType { get; set; }
+
     }
 }

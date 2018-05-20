@@ -18,8 +18,5 @@ namespace viacinema.Models
 
         [Required]
         public int availableSeats{ get; set; }
-
-        [Required, MaxLength(5)]
-        public string screenType { get; set; }
     }
 }

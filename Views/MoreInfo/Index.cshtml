@@ -1,0 +1,97 @@
+﻿@model viacinema.ViewModels.MoreInfoViewModel
+
+@{
+    ViewData["Title"] = "Movie Specifics";
+}
+
+@using viacinema.Models
+
+<h2>Specifics</h2>
+@{
+    Movie movie = @Model.Movie;
+    Screening selectedScreening = null;
+    }
+    <h3 class="movie-title">@movie.Title</h3>
+    <div class="movie-content">
+        <img class="movie-image" src="@movie.ImageUrl" />
+        <div class="movie-info">
+            <p class="movie-description"><b>Description:</b> @movie.Description</p>
+            <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
+            <p class="movie-rating"><b>Rating:</b> @movie.Rating</p>
+        </div>
+    </div>
+    <div class="screenings">
+        <ul>
+            @{ foreach (Screening screening in @Model.Screenings)
+                {
+                    <li class="screening-container">
+                        <div class="screening-content">
+                            <p class="screening-time">
+                                <b>Date and Time: </b>@screening.StartTime
+                                &nbsp;&nbsp;<b>Duration: </b> @{int hours = movie.DurationInSeconds / 3600;} @hours <b>:</b> @{int minutes = (movie.DurationInSeconds % 3600) / 60;} @minutes
+                                <b>&nbsp;&nbsp;Room #:</b> @screening.RoomNo
+                                @*<input class="book-button" type="button" value="Book" />*@
+                                <button type="button" class="btn btn-primary book-button" data-screening=@screening.Id data-toggle="modal" data-target="#reserveSeatModal">
+                                    Book 
+                                </button>
+                        </div>
+                    </li>
+                                    }
+            }
+        </ul>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reserveSeatModal" tabindex="-1" role="dialog" aria-labelledby="reserveSeatModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reserveSeatModalLabel">Reserve Seat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                            
+                            </div>
+                            <div class="col-6" id ="booking-screenType">
+                                Screen Type: <span class="room-number"></span>
+                            </div>
+                            <div class="col">
+                               
+                            </div>
+                        </div>
+                    </div>
+                        Seat grid here
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Continue</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+@section scripts
+{
+    <script>
+        //$(document).ready(function () {
+
+            $(".book-button").on("click", function () {
+                var screeningID = $(this).attr("data-screening");
+                $.ajax({
+                    url: "/api/screenings/" + screeningID,
+                    method: "GET",
+                    success: function (screening) {
+                        $('.room-number').text(screening.roomNo);
+                        $('.screen-type').text(screening.screenType);
+                    }
+                })
+            })
+       // });
+
+    </script>
+}
