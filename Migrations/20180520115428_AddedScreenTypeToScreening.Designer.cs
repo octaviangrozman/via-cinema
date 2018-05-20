@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180520115428_AddedScreenTypeToScreening")]
+    partial class AddedScreenTypeToScreening
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,36 +51,6 @@ namespace viacinema.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("viacinema.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Amount");
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired();
-
-                    b.Property<byte>("ExpiryMonth");
-
-                    b.Property<int>("ExpiryYear");
-
-                    b.Property<string>("NameOnCard")
-                        .IsRequired();
-
-                    b.Property<int>("ScreeningId");
-
-                    b.Property<int>("SeatNo");
-
-                    b.Property<int>("SecurityCode");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("viacinema.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -105,11 +76,11 @@ namespace viacinema.Migrations
 
                     b.Property<int>("RoomNo");
 
-                    b.Property<string>("ScreenType")
+                    b.Property<DateTime>("StartTime");
+
+                    b.Property<string>("screenType")
                         .IsRequired()
                         .HasMaxLength(5);
-
-                    b.Property<DateTime>("StartTime");
 
                     b.HasKey("Id");
 
@@ -123,7 +94,7 @@ namespace viacinema.Migrations
 
                     b.Property<bool>("Occupied");
 
-                    b.Property<decimal>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<int>("RoomNo");
 

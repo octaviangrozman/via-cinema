@@ -56,18 +56,6 @@ namespace viacinema.Controllers.Api
             return Ok(roomInDb);
         }
 
-        [HttpGet("{screenType}", Name = "GetRoomByScreen")]
-        public IActionResult GetRoomByScreen(string screen)
-        {
-            var roomInDb = context.Rooms
-                .Select(c => c.screenType == screen);
-
-            if (roomInDb == null)
-                return NotFound();
-
-            return Ok(roomInDb);
-        }
-
         [HttpPut("{roomNo}")]
         public IActionResult UpdateRoom(int roomNo, [FromBody] Room room)
         {

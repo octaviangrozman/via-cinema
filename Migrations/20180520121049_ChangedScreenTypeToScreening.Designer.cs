@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180520121049_ChangedScreenTypeToScreening")]
+    partial class ChangedScreenTypeToScreening
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,36 +49,6 @@ namespace viacinema.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("viacinema.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Amount");
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired();
-
-                    b.Property<byte>("ExpiryMonth");
-
-                    b.Property<int>("ExpiryYear");
-
-                    b.Property<string>("NameOnCard")
-                        .IsRequired();
-
-                    b.Property<int>("ScreeningId");
-
-                    b.Property<int>("SeatNo");
-
-                    b.Property<int>("SecurityCode");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("viacinema.Models.Room", b =>
@@ -123,7 +94,7 @@ namespace viacinema.Migrations
 
                     b.Property<bool>("Occupied");
 
-                    b.Property<decimal>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<int>("RoomNo");
 
