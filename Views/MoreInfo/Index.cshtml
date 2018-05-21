@@ -59,9 +59,6 @@
                         <div class="col-6" id="booking-screenType">
                             Room #: <span class="room-number"></span>
                         </div>
-                        <div class="col-3">
-
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-10">
@@ -71,12 +68,10 @@
 
                     @*TABLE/SEAT RESERVATION GRID*@
 
-                    Seat grid here
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             </thead>
-
                             <tbody class="seat-grid"></tbody>
                         </table>
                     </div>
@@ -140,12 +135,13 @@
                         success: function (seats) {
                             updateTable(seats);
                             _seats = seats;
-                            $(".seat-cell").on("click", function () {
-                                var seatNo = $(this).attr("data-seat-no");
-                                selectedSeat = seatNo;
-                                console.log(seatNo);
-                                updateTable(_seats);
-                            });
+                            
+                                $(".seat-cell").on("click", function () {
+                                    var seatNo = $(this).attr("data-seat-no");
+                                    selectedSeat = seatNo;
+                                    updateTable(_seats);       
+                                });
+                            
                         }
                     });
                 }
@@ -153,7 +149,7 @@
         });
 
         document.getElementById("continue-button").onclick = function () {
-            location.href = "payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
+            location.href = "/payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
         };
     </script>
 }
