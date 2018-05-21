@@ -32,7 +32,7 @@ namespace via_cinema.Controllers
 
             if (screening == null || seat == null) throw new NullReferenceException("screening or seat are not in database");
 
-            return View(new PaymentViewModel(screeningId, seatNo, seat.Price));
+            return View(new PaymentViewModel(context, screeningId, seatNo, seat.Price));
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace via_cinema.Controllers
 
             if (!ModelState.IsValid || !isCardNumberValid)
             {
-                return View("Index", new PaymentViewModel(payment.ScreeningId, payment.SeatNo, payment.Amount));
+                return View("Index", new PaymentViewModel(context, payment.ScreeningId, payment.SeatNo, payment.Amount));
             }
 
             context.Payments.Add(payment);
