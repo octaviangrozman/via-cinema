@@ -45,26 +45,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="reserveSeatModalLabel">Reserve Seat</h5>
+                <span class="modal-title">Reserve a seat</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-3">
-
-                        </div>
-                        <div class="col-6" id="booking-screenType">
-                            Room #: <span class="room-number"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-10">
-                            Screen Type: <span class="screen-type"></span>
-                        </div>
-                    </div>
+                    <h3>
+                        Room : <span class="room-number"></span>
+                    </h3>
 
                     @*TABLE/SEAT RESERVATION GRID*@
 
@@ -76,9 +66,11 @@
                         </table>
                     </div>
 
+                    <br />
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="continue-button" type="button" class="btn btn-primary">Continue</button>
+                        <button id="continue-button" type="button" class="btn btn-primary">Reserve and Pay</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +82,6 @@
     {
     <script>
         var selectedSeat = -1;
-        var _seats = null;
         var selectedScreening = -1;
 
         function updateTable(seats) {
@@ -117,6 +108,16 @@
                 html += el;
             }
             $('.seat-grid').html(html);
+
+            $(".seat-cell").on("click", function () {
+
+                var seatNo = $(this).attr("data-seat-no");
+                if (seats[seatNo].occupied) return;
+
+                selectedSeat = seatNo;
+                $(".seat-cell").removeClass('selected');
+                $(this).addClass('selected');
+            });
         }
 
 
@@ -134,14 +135,6 @@
                         method: "GET",
                         success: function (seats) {
                             updateTable(seats);
-                            _seats = seats;
-                            
-                                $(".seat-cell").on("click", function () {
-                                    var seatNo = $(this).attr("data-seat-no");
-                                    selectedSeat = seatNo;
-                                    updateTable(_seats);       
-                                });
-                            
                         }
                     });
                 }
@@ -149,14 +142,32 @@
         });
 
         document.getElementById("continue-button").onclick = function () {
+            if (selectedSeat == -1) {
+                alert("Please select a seat!")
+                return;
+            }
             location.href = "/payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
         };
     </script>
 }
 
 <style>
-    .table-responsive {
-        max-width: 550px;
+    .modal-title {
+        font-size: 25px;
+    }
+
+    .close {
+        font-size: 50px;
+        font-weight: 100;
+        height: 40px;
+        margin-top: -5px;
+    }
+
+    .modal-body {
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     td {
@@ -164,7 +175,7 @@
         text-align: center;
     }
 
-        td:hover {
+        td.green:hover {
             opacity: .7;
         }
 
@@ -182,7 +193,4 @@
             background: #337ab7;
         }
 
-    .modal-footer {
-        max-width: 550px;
-    }
 </style>

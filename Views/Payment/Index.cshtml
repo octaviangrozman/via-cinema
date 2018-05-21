@@ -6,10 +6,12 @@
     <h2>Payment</h2>
     @using (Html.BeginForm("Pay", "Payment"))
     {
-        <div class="price"><span class="title">Price to be paid:</span> <span class="amount">@Model.Amount DKK</span></div>
-        
+    <h3>Movie: @Model.Movie.Title | Seat: @(Model.SeatNo % 10), Row: @(Model.SeatNo / 10)</h3>
+        <div class="price">
+            <span class="title">Price to be paid:</span> <span class="amount">@Model.Amount DKK</span>
+        </div>
         @Html.ValidationSummary(true, "Please fix the following errors.")
-        
+
         <div class="form-group">
             @Html.LabelFor(p => p.CardNumber)
             @Html.TextBoxFor(p => p.CardNumber, new { @class = "form-control" })
@@ -33,7 +35,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(p => p.SecurityCode)
-                @Html.TextBoxFor(p => p.SecurityCode, new { @class = "form-control" })
+                @Html.TextBoxFor(p => p.SecurityCode, "", new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.SecurityCode)
             </div>
         </div>
@@ -42,7 +44,7 @@
         @Html.HiddenFor(p => p.SeatNo)
         @Html.HiddenFor(p => p.UserId)
         @Html.HiddenFor(p => p.Amount)
-  
+
         @Html.AntiForgeryToken()
 
         <button type="submit" class="btn btn-primary pay-button">Pay now</button>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using viacinema.Data;
 using viacinema.Models;
 
 namespace viacinema.ViewModels
@@ -38,12 +39,17 @@ namespace viacinema.ViewModels
 
         public decimal Amount { get; set; }
 
-        public PaymentViewModel(int screeningId, int seatNo, decimal seatPrice)
+        public Movie Movie { get; set; }
+
+        public PaymentViewModel(DataContext context, int screeningId, int seatNo, decimal seatPrice)
         {
             ScreeningId = screeningId;
             Amount = seatPrice;
             SeatNo = seatNo;
             UserId = 1;
+
+            Screening screening = context.Screenings.SingleOrDefault(s => s.Id == screeningId);
+            Movie = context.Movies.SingleOrDefault(m => m.Id == screening.MovieId);
 
             List<object> months = new List<object>() {
                 new { Value = 1 },

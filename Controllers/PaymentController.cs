@@ -1,6 +1,7 @@
 ﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Data;
@@ -13,6 +14,7 @@ namespace via_cinema.Controllers
     public class PaymentController : Controller
     {
         public DataContext context;
+        static HttpClient client = new HttpClient();
 
         public PaymentController(DataContext _context)
         {
@@ -31,21 +33,44 @@ namespace via_cinema.Controllers
 
             if (screening == null || seat == null) throw new NullReferenceException("screening or seat are not in database");
 
-            return View(new PaymentViewModel(screeningId, seatNo, seat.Price));
+            return View(new PaymentViewModel(context, screeningId, seatNo, seat.Price));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Pay(Payment payment)
+        public async Task<IActionResult> Pay(Payment payment)
         {
-            if (!ModelState.IsValid)
+            bool isCardNumberValid = await ValidateCreditCardAsync(payment.CardNumber);
+            if (!isCardNumberValid) ModelState.AddModelError("CardNumber", "Card number is invalid");
+
+            if (!ModelState.IsValid || !isCardNumberValid)
             {
-                return View("Index", new PaymentViewModel(payment.ScreeningId, payment.SeatNo, payment.Amount));
+                return View("Index", new PaymentViewModel(context, payment.ScreeningId, payment.SeatNo, payment.Amount));
             }
 
             context.Payments.Add(payment);
+            Screening screening = context.Screenings.SingleOrDefault(s => s.Id == payment.ScreeningId);
+            Seat seatInDb = null;
+            if (screening != null)
+            {
+                seatInDb = context.Seats.SingleOrDefault(s => s.SeatNo == payment.SeatNo && s.RoomNo == screening.RoomNo);
+            }
+            if (seatInDb != null)
+            {
+                seatInDb.Occupied = true;
+            }
             context.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost, NonAction]
+        public async Task<bool> ValidateCreditCardAsync(string creditCardNumber)
+        {
+            HttpResponseMessage response = await client.PostAsJsonAsync("http://localhost:60894/api/creditcard/validate", new { creditCardNumber });
+            response.EnsureSuccessStatusCode();
+
+            bool isValid = await response.Content.ReadAsAsync<bool>();
+            return isValid;
         }
     }
 }*/
