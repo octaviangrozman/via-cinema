@@ -130,7 +130,7 @@
                     $('.room-number').text(screening.roomNo);
                     $('.screen-type').text(screening.screenType);
                     $.ajax({
-                        url: "/api/seats/seatsroom/" + screening.roomNo,
+                        url: "/api/seats/seatsscreening/" + screening.id + "/" + screening.roomNo,
                         method: "GET",
                         success: function (seats) {
                             updateTable(seats);

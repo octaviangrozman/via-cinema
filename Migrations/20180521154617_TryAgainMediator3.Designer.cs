@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180521154617_TryAgainMediator3")]
+    partial class TryAgainMediator3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,8 +104,6 @@ namespace viacinema.Migrations
 
                     b.Property<int>("MovieId");
 
-                    b.Property<int>("RoomNo");
-
                     b.Property<string>("ScreenType")
                         .IsRequired()
                         .HasMaxLength(5);
@@ -144,8 +143,6 @@ namespace viacinema.Migrations
                     b.Property<int>("RoomNo");
 
                     b.Property<int>("ScreeningId");
-
-                    b.Property<int>("SeatId");
 
                     b.Property<int>("SeatNo");
 

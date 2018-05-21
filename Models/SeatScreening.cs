@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace viacinema.Models
 {
-    public class Seat
+    public class SeatScreening
     {
         public int Id { get; set; }
 
@@ -14,12 +14,15 @@ namespace viacinema.Models
         public int SeatNo { get; set; }
 
         [Required]
-        public int RowNo { get; set; }
+        public int SeatId { get; set; }
+
+        [Required]
+        public int ScreeningId { get; set; }
 
         [Required]
         public int RoomNo { get; set; }
 
-        [Required, Range(80, 120)]
-        public decimal Price { get; set; }
+        [Required]
+        public Boolean Occupied { get; set; }
     }
 }

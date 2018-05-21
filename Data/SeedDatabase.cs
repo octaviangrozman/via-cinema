@@ -29,14 +29,19 @@ namespace viacinema.Data
                 AddSeats(context);
                 context.SaveChanges();
             }
-
             if (!context.Screenings.Any())
             {
                 List<Movie> movies = context.Movies.Take(2).ToList();
                 AddScreening(context, movies[0].Id, 1, DateTime.Now, "3D");
                 AddScreening(context, movies[1].Id, 2, new DateTime(2018, 5, 22, 15, 0, 0), "2D");
+                context.SaveChanges();
             }
-
+            if (!context.SeatScreeningMediator.Any())
+            {
+                AddSeatScreening(context, 2);
+                AddSeatScreening(context, 1);
+                context.SaveChanges();
+            }
             context.SaveChanges();
         }
 
@@ -80,9 +85,8 @@ namespace viacinema.Data
             totalSeats = 50;
             for (int i = 0; i < totalSeats; i++)
             {
-                seats.Add(new Seat() { Price = 90, RoomNo = 2, SeatNo = i, RowNo = GetRowNo(i) });
+                seats.Add(new Seat() { Price = 90, RoomNo = 2, SeatNo = i+1, RowNo = GetRowNo(i) });
             }
-
             context.Seats.AddRange(seats);
         }
 
@@ -90,6 +94,26 @@ namespace viacinema.Data
         {
             var screening = new Screening() { MovieId = movieId, RoomNo = roomNo, StartTime = startTime, ScreenType = screenType };
             context.Screenings.Add(screening);
+        }
+
+        private static void AddSeatScreening(DataContext context, int roomNo)
+        {
+            List<int> screeningIds = new List<int>();
+            screeningIds = context.Screenings.Select(i => i.Id).ToList();
+
+            //int seatId = -1;
+
+            var seats = new List<Seat>();
+            seats = context.Seats.Where(s => s.RoomNo == roomNo).ToList();
+
+            foreach (Seat seat in seats)
+            {
+               // seatId = context.Seats.Select(i => i.Id).SingleOrDefault();
+                foreach (int id in screeningIds)
+                {
+                    context.SeatScreeningMediator.Add(new SeatScreening() { Occupied = false, RoomNo = roomNo, ScreeningId = id, SeatNo = seat.SeatNo,/* SeatId = seatId*/ });
+                }
+            }
         }
     }
 }
