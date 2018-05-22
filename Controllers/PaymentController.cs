@@ -39,6 +39,7 @@ namespace via_cinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Pay(Payment payment)
         {
+            // consider using public API: https://www.bincodes.com/api-creditcard-checker/
             bool isCardNumberValid = await ValidateCreditCardAsync(payment.CardNumber);
             if (!isCardNumberValid) ModelState.AddModelError("CardNumber", "Card number is invalid");
 
