@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using viacinema.Data;
+using viacinema.Models;
 using viacinema.ViewModels;
 
 namespace viacinema.Controllers
@@ -28,7 +29,13 @@ namespace viacinema.Controllers
                 .OrderByDescending(s => s.StartTime)
                 .ToList();
 
-            return View(new MoreInfoViewModel(movie, screenings));
+            List<SeatScreening> seatScreenings = new List<SeatScreening>();
+            foreach (var screening in screenings)
+            {
+                seatScreenings.AddRange(context.SeatScreeningMediator.Where(s => s.ScreeningId == screening.Id).ToList());
+            }
+
+            return View(new MoreInfoViewModel(movie, screenings, seatScreenings));
         }
     }
 }

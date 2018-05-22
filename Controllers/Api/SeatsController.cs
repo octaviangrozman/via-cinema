@@ -39,6 +39,17 @@ namespace viacinema.Controllers.Api
             return Ok(seats);
         }
 
+        [HttpGet("seatsscreening/{screeningID}/{roomNo}")]
+        public IActionResult GetSeatsForScreening(int screeningID, int roomNo)
+        {
+            var seats = context.SeatScreeningMediator
+                .Where(s => s.ScreeningId == screeningID && s.RoomNo == roomNo)
+                .OrderBy(s => s.SeatNo)
+                .ToList();
+
+            return Ok(seats);
+        }
+
         [HttpGet("{id}", Name = "GetSeat")]
         public IActionResult GetSeat(int id)
         {

@@ -11,9 +11,10 @@ using viacinema.Data;
 namespace viacinema.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180521152000_ActualMediator")]
+    partial class ActualMediator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,8 +104,6 @@ namespace viacinema.Migrations
 
                     b.Property<int>("MovieId");
 
-                    b.Property<int>("RoomNo");
-
                     b.Property<string>("ScreenType")
                         .IsRequired()
                         .HasMaxLength(5);
@@ -121,6 +120,8 @@ namespace viacinema.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Occupied");
+
                     b.Property<decimal>("Price");
 
                     b.Property<int>("RoomNo");
@@ -132,26 +133,6 @@ namespace viacinema.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Seats");
-                });
-
-            modelBuilder.Entity("viacinema.Models.SeatScreening", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Occupied");
-
-                    b.Property<int>("RoomNo");
-
-                    b.Property<int>("ScreeningId");
-
-                    b.Property<int>("SeatId");
-
-                    b.Property<int>("SeatNo");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SeatScreeningMediator");
                 });
 #pragma warning restore 612, 618
         }

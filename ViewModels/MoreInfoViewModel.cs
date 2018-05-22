@@ -10,11 +10,13 @@ namespace viacinema.ViewModels
     {
         public Movie Movie { get; set; }
         public List<Screening> Screenings { get; set; }
+        public List<SeatScreening> SeatScreenings { get; set; }
 
-        public MoreInfoViewModel(Movie movie, List<Screening> scr)
+        public MoreInfoViewModel(Movie movie, List<Screening> scr, List<SeatScreening> seatSceen)
         {
             this.Movie = movie;
             this.Screenings = scr;
+            this.SeatScreenings = seatSceen;
         }
     }
 }
