@@ -8,7 +8,7 @@ using via_cinema.Models;
 using viacinema.Data;
 using viacinema.ViewModels;
 
-namespace via_cinema.Controllers
+namespace viacinema.Controllers
 {
     public class HomeController : Controller
     {

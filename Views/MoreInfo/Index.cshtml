@@ -8,18 +8,29 @@
 
 <h2>Specifics</h2>
 @{
-    Movie movie = @Model.Movie;
-}
+        Movie movie = @Model.Movie;
+        string ratingClassName = "";
+        switch (@movie.Rating)
+        {
+            case 1: ratingClassName = "one"; break;
+            case 2: ratingClassName = "two"; break;
+            case 3: ratingClassName = "three"; break;
+            case 4: ratingClassName = "four"; break;
+            case 5:
+            default: ratingClassName = "five"; break;
+        }
+    }
 <h3 class="movie-title">@movie.Title</h3>
 <div class="movie-content">
     <img class="movie-image" src="@movie.ImageUrl" />
     <div class="movie-info">
         <p class="movie-description"><b>Description:</b> @movie.Description</p>
         <p class="movie-genre"><b>Genre:</b> @movie.Genre</p>
-        <p class="movie-rating"><b>Rating:</b> @movie.Rating</p>
+        <p class="movie-rating @ratingClassName"><b>Rating:</b> <span></span></p>
     </div>
 </div>
 <div class="screenings">
+    <h2>Screenings</h2>
     <ul>
         @{ foreach (Screening screening in @Model.Screenings)
             {
@@ -152,6 +163,35 @@
 }
 
 <style>
+    .movie-rating {
+        display: flex;
+        align-items: center;
+    }
+
+    .movie-rating span {
+        display: inline-flex;
+        width: 100px;
+        height: 40px;
+        background: url("https://www.gruppomazzini.it/site/uploads/2017/06/five-stars.png");
+        background-size: cover;
+    }
+
+    .movie-rating .four {
+        width: 81px;
+    }
+
+    .movie-rating .three {
+        width: 63px;
+    }
+
+    .movie-rating .two {
+        width: 45px;
+    }
+
+    .movie-rating .one {
+        width: 25px;
+    }
+
     .modal-title {
         font-size: 25px;
     }

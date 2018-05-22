@@ -1,5 +1,4 @@
-﻿/*using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using viacinema.Data;
 using viacinema.Models;
 using viacinema.ViewModels;
 
-namespace via_cinema.Controllers
+namespace viacinema.Controllers
 {
     [Route("payment")]
     public class PaymentController : Controller
@@ -29,7 +28,8 @@ namespace via_cinema.Controllers
             if (screeningId == 0 || seatNo == 0) throw new ArgumentNullException("screening or seat  are null");
 
             Screening screening = context.Screenings.SingleOrDefault(s => s.Id == screeningId);
-            Seat seat = context.Seats.SingleOrDefault(s => s.SeatNo == seatNo && s.RoomNo == screening.RoomNo);
+            SeatScreening seatScreening =  context.SeatScreeningMediator.FirstOrDefault(s => s.ScreeningId == screeningId && s.SeatNo == seatNo);
+            Seat seat = context.Seats.SingleOrDefault(s => s.Id == seatScreening.SeatId);
 
             if (screening == null || seat == null) throw new NullReferenceException("screening or seat are not in database");
 
@@ -51,14 +51,11 @@ namespace via_cinema.Controllers
 
             context.Payments.Add(payment);
             Screening screening = context.Screenings.SingleOrDefault(s => s.Id == payment.ScreeningId);
-            Seat seatInDb = null;
-            if (screening != null)
+            SeatScreening seatScreening = context.SeatScreeningMediator.FirstOrDefault(s => s.ScreeningId == payment.ScreeningId && s.SeatNo == payment.SeatNo);
+
+            if (seatScreening != null)
             {
-                seatInDb = context.Seats.SingleOrDefault(s => s.SeatNo == payment.SeatNo && s.RoomNo == screening.RoomNo);
-            }
-            if (seatInDb != null)
-            {
-                seatInDb.Occupied = true;
+                seatScreening.Occupied = true;
             }
             context.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -74,4 +71,4 @@ namespace via_cinema.Controllers
             return isValid;
         }
     }
-}*/
+}
