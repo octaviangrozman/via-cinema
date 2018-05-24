@@ -101,17 +101,14 @@ namespace viacinema.Data
             List<int> screeningIds = new List<int>();
             screeningIds = context.Screenings.Select(i => i.Id).ToList();
 
-            //int seatId = -1;
-
             var seats = new List<Seat>();
             seats = context.Seats.Where(s => s.RoomNo == roomNo).ToList();
 
             foreach (Seat seat in seats)
             {
-               // seatId = context.Seats.Select(i => i.Id).SingleOrDefault();
                 foreach (int id in screeningIds)
                 {
-                    context.SeatScreeningMediator.Add(new SeatScreening() { Occupied = false, RoomNo = roomNo, ScreeningId = id, SeatNo = seat.SeatNo,/* SeatId = seatId*/ });
+                    context.SeatScreeningMediator.Add(new SeatScreening() { Occupied = false, RoomNo = roomNo, ScreeningId = id, SeatNo = seat.SeatNo, SeatId = seat.Id});
                 }
             }
         }

@@ -26,8 +26,8 @@ namespace viacinema.Controllers
             int.TryParse(Request.Query["seat"], out int seatNo);
 
             if (screeningId == 0 || seatNo == 0) throw new ArgumentNullException("screening or seat  are null");
-
             Screening screening = context.Screenings.SingleOrDefault(s => s.Id == screeningId);
+            Console.WriteLine(screening.Id);
             SeatScreening seatScreening =  context.SeatScreeningMediator.FirstOrDefault(s => s.ScreeningId == screeningId && s.SeatNo == seatNo);
             Seat seat = context.Seats.SingleOrDefault(s => s.Id == seatScreening.SeatId);
 

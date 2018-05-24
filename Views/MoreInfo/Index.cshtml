@@ -146,6 +146,7 @@
                         method: "GET",
                         success: function (seats) {
                             updateTable(seats);
+                            console.log(seats)
                         }
                     });
                 }
@@ -157,6 +158,8 @@
                 alert("Please select a seat!")
                 return;
             }
+            console.log(selectedScreening);
+            console.log(selectedSeat);
             location.href = "/payment/?seat=" + selectedSeat + "&screening=" + selectedScreening;
         };
     </script>
